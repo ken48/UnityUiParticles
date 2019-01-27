@@ -1,0 +1,17 @@
+**/.DS_Store/
+**/.vs/
+**/.idea/
+**/obj/
+**/bin/
+**/Jetbrains*
+
+**/Library/
+**/Temp/
+**/Build/
+
+*.sln
+*.user
+*.csproj
+*.userprefs
+Plugins.meta
+Editor.meta
