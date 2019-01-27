@@ -30,8 +30,8 @@ public class ParticleSystemMeshGeneratorEditor : Editor
 
         // Using Trails module leads to using 2 materials with 2 different textures determined inside each material.
         // Sprites mode in Texture sheet animation module requires CanvasRenderer.SetTexture that overrides texture for all materials.
-        // Also the requirement of the "Sprites" mode that all the sprites were inside the same texture, makes it redundant.
-        // Just use "Grid" mode.
+        // Also the requirement of the 'Sprites' mode that all the sprites were inside the same texture, makes it redundant.
+        // Just use the 'Grid' mode instead.
         if (_texSheetAnimationModule.enabled && _texSheetAnimationModule.mode == ParticleSystemAnimationMode.Sprites)
             EditorGUILayout.HelpBox("Texture sheet animation 'Sprites' mode is unsupported", MessageType.Error);
     }
