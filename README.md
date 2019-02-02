@@ -17,3 +17,6 @@ Just use the 'Grid' mode instead.
 Unity **2018.2+** due to new interface for ParticleSystemRender:
 * BakeMesh
 * BakeTrailsMesh
+
+## License
+* MIT
