@@ -1,7 +1,6 @@
 # UnityUiParticles
 Unity ParticleSystem for built-in UI
 
-[![](https://img.shields.io/github/license/ken48/UnityUiParticles.svg)](https://github.com/ken48/UnityUiParticles/blob/master/LICENSE.md)
 [![](https://img.shields.io/badge/requirement-Unity%202018.2%2B-green.svg)](https://unity3d.com)
 
 Full compatibility with Unity UI Canvas: sorting order, masking, UI shaders etc...
