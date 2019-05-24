@@ -57,13 +57,7 @@ namespace UnitUiParticles
             Canvas.willRenderCanvases -= Refresh;
         }
 
-        protected override void OnValidate()
-        {
-            base.OnValidate();
-
-            GetComponent<ParticleSystemRenderer>().enabled = false;
-        }
-
+#if UNITY_EDITOR
         protected override void Reset()
         {
             base.Reset();
@@ -75,6 +69,7 @@ namespace UnitUiParticles
             mainModule.simulationSpace = ParticleSystemSimulationSpace.Local;
             mainModule.scalingMode = ParticleSystemScalingMode.Local;
         }
+#endif
 
         void Refresh()
         {
