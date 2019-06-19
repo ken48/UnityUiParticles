@@ -9,10 +9,12 @@ namespace UnityUiParticles
     [RequireComponent(typeof(ParticleSystem))]
     public class ParticleSystemMeshGenerator : MaskableGraphic
     {
+#pragma warning disable CS0649
         [SerializeField]
         Material _material;
         [SerializeField]
         Material _trailsMaterial;
+#pragma warning restore CS0649
 
         ParticleSystem _particleSystem;
         ParticleSystemRenderer _particleSystemRenderer;
