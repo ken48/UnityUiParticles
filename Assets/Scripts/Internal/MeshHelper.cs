@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnitUiParticles.Internal
+namespace UnityUiParticles.Internal
 {
-    internal class ParticleSystemMeshHelper
+    internal class MeshHelper
     {
-        public Mesh mainMesh { get { return _mainMesh; } }
+        public Mesh mainMesh => _mainMesh;
 
         Mesh _mainMesh;
         List<Mesh> _temporaryMeshes;
         int _temporaryMeshIndex;
         CombineInstance[] _meshCombine;
 
-        public static ParticleSystemMeshHelper Create()
+        public static MeshHelper Create()
         {
-            return new ParticleSystemMeshHelper { _mainMesh = CreateMesh(), };
+            return new MeshHelper
+            {
+                _mainMesh = CreateMesh()
+            };
         }
 
         public void Destroy()
@@ -78,9 +81,9 @@ namespace UnitUiParticles.Internal
         static void DestroyMesh(Mesh mesh)
         {
             if (Application.isPlaying)
-                UnityEngine.Object.Destroy(mesh);
+                Object.Destroy(mesh);
             else
-                UnityEngine.Object.DestroyImmediate(mesh);
+                Object.DestroyImmediate(mesh);
         }
     }
 }

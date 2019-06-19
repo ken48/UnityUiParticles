@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-namespace UnitUiParticles.Internal
+namespace UnityUiParticles.Internal
 {
-    internal class ParticleSystemMeshBakingCamera : MonoBehaviour
+    internal class BakingCamera : MonoBehaviour
     {
-        static ParticleSystemMeshBakingCamera _instance;
+        static BakingCamera _instance;
         Camera _camera;
         int _refCount;
 
@@ -13,12 +13,12 @@ namespace UnitUiParticles.Internal
         {
             if (_instance == null)
             {
-                var gameObject = new GameObject(typeof(ParticleSystemMeshBakingCamera).Name);
+                var gameObject = new GameObject(typeof(BakingCamera).Name);
 
                 // This camera object is just for internal use
                 gameObject.hideFlags = HideFlags.HideAndDontSave;
 
-                _instance = gameObject.AddComponent<ParticleSystemMeshBakingCamera>();
+                _instance = gameObject.AddComponent<BakingCamera>();
                 _instance._camera = gameObject.AddComponent<Camera>();
                 _instance._camera.orthographic = true;
 
@@ -31,7 +31,7 @@ namespace UnitUiParticles.Internal
         public static void UnregisterConsumer()
         {
             if (_instance == null)
-                throw new Exception("ParticleSystemMeshBakingCamera has no instance");
+                throw new Exception("BakingCamera has no instance");
 
             _instance._refCount--;
             if (_instance._refCount == 0)

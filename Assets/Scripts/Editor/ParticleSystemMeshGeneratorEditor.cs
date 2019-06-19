@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-namespace UnitUiParticles
+namespace UnityUiParticles
 {
     [CustomEditor(typeof(ParticleSystemMeshGenerator), false)]
     [CanEditMultipleObjects]

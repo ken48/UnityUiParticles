@@ -2,7 +2,7 @@
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-namespace UnitUiParticles
+namespace UnityUiParticles
 {
     using Internal;
 
@@ -17,7 +17,7 @@ namespace UnitUiParticles
         ParticleSystem _particleSystem;
         ParticleSystemRenderer _particleSystemRenderer;
         ParticleSystem.TrailModule _trailsModule;
-        ParticleSystemMeshHelper _meshHelper;
+        MeshHelper _meshHelper;
         Material[] _maskMaterials;
 
         protected override void Awake()
@@ -33,10 +33,10 @@ namespace UnitUiParticles
         {
             base.OnEnable();
 
-            _meshHelper = ParticleSystemMeshHelper.Create();
+            _meshHelper = MeshHelper.Create();
             _maskMaterials = new Material[2];
 
-            ParticleSystemMeshBakingCamera.RegisterConsumer();
+            BakingCamera.RegisterConsumer();
 
             Canvas.willRenderCanvases += Refresh;
         }
@@ -52,7 +52,7 @@ namespace UnitUiParticles
                 StencilMaterial.Remove(maskMaterial);
             _maskMaterials = null;
 
-            ParticleSystemMeshBakingCamera.UnregisterConsumer();
+            BakingCamera.UnregisterConsumer();
 
             Canvas.willRenderCanvases -= Refresh;
         }
@@ -80,7 +80,7 @@ namespace UnitUiParticles
 
             if (_particleSystem.particleCount > 0)
             {
-                Camera meshBakingCamera = ParticleSystemMeshBakingCamera.GetCamera(canvas);
+                Camera meshBakingCamera = BakingCamera.GetCamera(canvas);
                 if (_trailsModule.enabled)
                 {
                     _particleSystemRenderer.BakeMesh(_meshHelper.GetTemporaryMesh(), meshBakingCamera);
