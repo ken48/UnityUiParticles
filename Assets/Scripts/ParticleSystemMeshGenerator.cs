@@ -69,7 +69,7 @@ namespace UnityUiParticles
             ParticleSystem.MainModule mainModule = GetComponent<ParticleSystem>().main;
             mainModule.emitterVelocityMode = ParticleSystemEmitterVelocityMode.Transform;
             mainModule.simulationSpace = ParticleSystemSimulationSpace.Local;
-            mainModule.scalingMode = ParticleSystemScalingMode.Local;
+            mainModule.scalingMode = ParticleSystemScalingMode.Hierarchy;
         }
 #endif
 
