@@ -17,7 +17,7 @@ Just use the 'Grid' mode instead.
 
 Scaling mode - Hierarchy only  
 Simulation space - Local only  
-Camera for baking mesh in Overlay rendering mode - Orthographic only
+Camera for baking mesh - Orthographic only
 
 ## Requirements
 Unity **2018.2+** due to new interface for ParticleSystemRender:
