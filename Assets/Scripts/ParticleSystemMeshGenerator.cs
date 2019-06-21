@@ -66,10 +66,6 @@ namespace UnityUiParticles
 
             raycastTarget = false;
             GetComponent<ParticleSystemRenderer>().enabled = false;
-            ParticleSystem.MainModule mainModule = GetComponent<ParticleSystem>().main;
-            mainModule.emitterVelocityMode = ParticleSystemEmitterVelocityMode.Transform;
-            mainModule.simulationSpace = ParticleSystemSimulationSpace.Local;
-            mainModule.scalingMode = ParticleSystemScalingMode.Hierarchy;
         }
 #endif
 
