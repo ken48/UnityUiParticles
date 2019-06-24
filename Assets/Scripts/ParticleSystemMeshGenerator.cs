@@ -78,6 +78,9 @@ namespace UnityUiParticles
 
             if (_particleSystem.particleCount > 0)
             {
+                // Reset scale z to 0 to avoid mesh vertices culling by baking camera
+                rectTransform.localScale = (Vector2)rectTransform.localScale;
+
                 Camera meshBakingCamera = BakingCamera.GetCamera(canvas);
                 if (_trailsModule.enabled)
                 {
