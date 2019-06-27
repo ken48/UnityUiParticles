@@ -74,6 +74,9 @@ namespace UnityUiParticles
             if (canvas == null)
                 return;
 
+            // Reset scale z to 0 to avoid mesh vertices culling by baking camera
+            rectTransform.localScale = (Vector2)rectTransform.localScale;
+
             _meshHelper.Clear();
 
             if (_particleSystem.particleCount > 0)
