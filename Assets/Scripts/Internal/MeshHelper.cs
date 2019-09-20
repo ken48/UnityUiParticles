@@ -57,7 +57,7 @@ namespace UnityUiParticles.Internal
             return _temporaryMeshes[_temporaryMeshIndex++];
         }
 
-        public void CombineTemporaryMeshes()
+        public void CombineTemporaryMeshes(Matrix4x4 m)
         {
             int temporaryMeshesCount = _temporaryMeshIndex;
             if (_meshCombine == null || _meshCombine.Length != temporaryMeshesCount)
@@ -67,7 +67,10 @@ namespace UnityUiParticles.Internal
                     _meshCombine[i].mesh = _temporaryMeshes[i];
             }
 
-            _mainMesh.CombineMeshes(_meshCombine, false, false);
+            for (int i = 0; i < temporaryMeshesCount; i++)
+                _meshCombine[i].transform = m;
+
+            _mainMesh.CombineMeshes(_meshCombine, false, true);
             _temporaryMeshIndex = 0;
         }
 

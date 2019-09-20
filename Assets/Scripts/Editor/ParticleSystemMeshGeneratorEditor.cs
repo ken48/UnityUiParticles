@@ -10,14 +10,19 @@ namespace UnityUiParticles
         SerializedProperty _material;
         SerializedProperty _trailsMaterial;
         ParticleSystemRenderer _particleSystemRenderer;
+        ParticleSystem.MainModule _mainModule;
         ParticleSystem.TextureSheetAnimationModule _texSheetAnimationModule;
 
         void OnEnable()
         {
             _material = serializedObject.FindProperty("_material");
             _trailsMaterial = serializedObject.FindProperty("_trailsMaterial");
+
             _particleSystemRenderer = ((ParticleSystemMeshGenerator)target).GetComponent<ParticleSystemRenderer>();
-            _texSheetAnimationModule = ((ParticleSystemMeshGenerator)target).GetComponent<ParticleSystem>().textureSheetAnimation;
+
+            var particleSystem = ((ParticleSystemMeshGenerator)target).GetComponent<ParticleSystem>();
+            _mainModule = particleSystem.main;
+            _texSheetAnimationModule = particleSystem.textureSheetAnimation;
         }
 
         public override void OnInspectorGUI()
@@ -36,6 +41,12 @@ namespace UnityUiParticles
             // Just use the 'Grid' mode instead.
             if (_texSheetAnimationModule.enabled && _texSheetAnimationModule.mode == ParticleSystemAnimationMode.Sprites)
                 EditorGUILayout.HelpBox("Texture sheet animation 'Sprites' mode is unsupported", MessageType.Error);
+
+            if (_mainModule.simulationSpace == ParticleSystemSimulationSpace.World &&
+                _mainModule.scalingMode != ParticleSystemScalingMode.Hierarchy)
+            {
+                EditorGUILayout.HelpBox("Set Hierarchy scaling mode for World simulation space", MessageType.Error);
+            }
         }
     }
 }

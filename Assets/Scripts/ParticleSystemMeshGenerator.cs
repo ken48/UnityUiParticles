@@ -18,6 +18,7 @@ namespace UnityUiParticles
 
         ParticleSystem _particleSystem;
         ParticleSystemRenderer _particleSystemRenderer;
+        ParticleSystem.MainModule _mainModule;
         ParticleSystem.TrailModule _trailsModule;
         MeshHelper _meshHelper;
         Material[] _maskMaterials;
@@ -28,6 +29,7 @@ namespace UnityUiParticles
 
             _particleSystem = GetComponent<ParticleSystem>();
             _particleSystemRenderer = GetComponent<ParticleSystemRenderer>();
+            _mainModule = _particleSystem.main;
             _trailsModule = _particleSystem.trails;
         }
 
@@ -79,22 +81,18 @@ namespace UnityUiParticles
             if (_particleSystem.particleCount > 0)
             {
                 Camera meshBakingCamera = BakingCamera.GetCamera(canvas);
-                if (_trailsModule.enabled)
-                {
-                    _particleSystemRenderer.BakeMesh(_meshHelper.GetTemporaryMesh(), meshBakingCamera);
+                _particleSystemRenderer.BakeMesh(_meshHelper.GetTemporaryMesh(), meshBakingCamera);
+                bool isTrailsEnabled = _trailsModule.enabled;
+
+                if (isTrailsEnabled)
                     _particleSystemRenderer.BakeTrailsMesh(_meshHelper.GetTemporaryMesh(), meshBakingCamera);
-                    _meshHelper.CombineTemporaryMeshes();
 
-                    if (canvasRenderer.materialCount != 2)
-                        SetMaterialDirty();
-                }
-                else
-                {
-                    _particleSystemRenderer.BakeMesh(_meshHelper.mainMesh, meshBakingCamera);
+                if (canvasRenderer.materialCount != (isTrailsEnabled ? 2 : 1))
+                    SetMaterialDirty();
 
-                    if (canvasRenderer.materialCount != 1)
-                        SetMaterialDirty();
-                }
+                var matrix = _mainModule.simulationSpace == ParticleSystemSimulationSpace.World ?
+                    transform.worldToLocalMatrix : Matrix4x4.identity;
+                _meshHelper.CombineTemporaryMeshes(matrix);
             }
 
             canvasRenderer.SetMesh(_meshHelper.mainMesh);
