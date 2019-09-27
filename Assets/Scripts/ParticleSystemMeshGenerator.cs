@@ -9,6 +9,8 @@ namespace UnityUiParticles
     [RequireComponent(typeof(ParticleSystem))]
     public class ParticleSystemMeshGenerator : MaskableGraphic
     {
+        static readonly Matrix4x4 ScaleZ = Matrix4x4.Scale(new Vector3(1f, 1f, 0.00001f));
+
 #pragma warning disable CS0649
         [SerializeField]
         Material _material;
@@ -92,7 +94,7 @@ namespace UnityUiParticles
 
                 var matrix = _mainModule.simulationSpace == ParticleSystemSimulationSpace.World ?
                     transform.worldToLocalMatrix : Matrix4x4.identity;
-                _meshHelper.CombineTemporaryMeshes(matrix);
+                _meshHelper.CombineTemporaryMeshes(ScaleZ * matrix);
             }
 
             canvasRenderer.SetMesh(_meshHelper.mainMesh);
