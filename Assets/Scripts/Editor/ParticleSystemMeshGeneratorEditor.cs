@@ -42,11 +42,23 @@ namespace UnityUiParticles
             if (_texSheetAnimationModule.enabled && _texSheetAnimationModule.mode == ParticleSystemAnimationMode.Sprites)
                 EditorGUILayout.HelpBox("Texture sheet animation 'Sprites' mode is unsupported", MessageType.Error);
 
-            if (_mainModule.simulationSpace == ParticleSystemSimulationSpace.World &&
-                _mainModule.scalingMode != ParticleSystemScalingMode.Hierarchy)
+            switch (_mainModule.simulationSpace)
             {
-                EditorGUILayout.HelpBox("Set Hierarchy scaling mode for World simulation space", MessageType.Error);
+                case ParticleSystemSimulationSpace.World:
+                    if (_mainModule.scalingMode != ParticleSystemScalingMode.Hierarchy)
+                        ShowError(ParticleSystemScalingMode.Hierarchy, _mainModule.simulationSpace);
+                    break;
+
+                case ParticleSystemSimulationSpace.Local:
+                    if (_mainModule.scalingMode != ParticleSystemScalingMode.Local)
+                        ShowError(ParticleSystemScalingMode.Local, _mainModule.simulationSpace);
+                    break;
             }
+        }
+
+        static void ShowError(ParticleSystemScalingMode scalingMode, ParticleSystemSimulationSpace simulationSpace)
+        {
+            EditorGUILayout.HelpBox($"Set {scalingMode} scaling mode for {simulationSpace} simulation space", MessageType.Error);
         }
     }
 }

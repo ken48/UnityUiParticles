@@ -20,6 +20,7 @@ namespace UnityUiParticles.Internal
 
                 _instance = gameObject.AddComponent<BakingCamera>();
                 _instance._camera = gameObject.AddComponent<Camera>();
+                _instance._camera.orthographic = true;
 
                 // Turn camera off because particle mesh baker will use only camera matrix
                 gameObject.SetActive(false);
@@ -45,20 +46,11 @@ namespace UnityUiParticles.Internal
 
         public static Camera GetCamera(Canvas canvas)
         {
-            Camera currentCamera = _instance._camera;
-            if (canvas.renderMode != RenderMode.ScreenSpaceOverlay)
-            {
-                var canvasWorldCamera = canvas.worldCamera;
-                if (canvasWorldCamera != null)
-                    currentCamera = canvasWorldCamera;
-            }
-
             // Adjust camera orthographic size to canvas size
             // for canvas-based coordinates of particles' size and speed.
             Vector2 size = ((RectTransform)canvas.transform).rect.size;
-            currentCamera.orthographic = true;
-            currentCamera.orthographicSize = Mathf.Max(size.x, size.y) * canvas.scaleFactor;
-            return currentCamera;
+            _instance._camera.orthographicSize = Mathf.Max(size.x, size.y) * canvas.scaleFactor;
+            return _instance._camera;
         }
     }
 }
