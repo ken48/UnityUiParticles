@@ -24,6 +24,7 @@ namespace UnityUiParticles
         ParticleSystem.TrailModule _trailsModule;
         MeshHelper _meshHelper;
         Material[] _maskMaterials;
+        Canvas _parentCanvas;
 
         protected override void Awake()
         {
@@ -44,12 +45,15 @@ namespace UnityUiParticles
 
             BakingCamera.RegisterConsumer();
 
+            _parentCanvas = null;
             Canvas.willRenderCanvases += Refresh;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
+
+            Canvas.willRenderCanvases -= Refresh;
 
             _meshHelper.Destroy();
             _meshHelper = null;
@@ -59,8 +63,6 @@ namespace UnityUiParticles
             _maskMaterials = null;
 
             BakingCamera.UnregisterConsumer();
-
-            Canvas.willRenderCanvases -= Refresh;
         }
 
 #if UNITY_EDITOR
@@ -75,14 +77,15 @@ namespace UnityUiParticles
 
         void Refresh()
         {
-            if (canvas == null)
+            Canvas parentCanvas = GetParentCanvas();
+            if (parentCanvas == null)
                 return;
 
             _meshHelper.Clear();
 
             if (_particleSystem.particleCount > 0)
             {
-                Camera meshBakingCamera = BakingCamera.GetCamera(canvas);
+                Camera meshBakingCamera = BakingCamera.GetCamera(parentCanvas);
                 _particleSystemRenderer.BakeMesh(_meshHelper.GetTemporaryMesh(), meshBakingCamera);
                 bool isTrailsEnabled = _trailsModule.enabled;
 
@@ -98,6 +101,13 @@ namespace UnityUiParticles
             }
 
             canvasRenderer.SetMesh(_meshHelper.mainMesh);
+        }
+
+        Canvas GetParentCanvas()
+        {
+            if (_parentCanvas == null)
+                _parentCanvas = GetComponentInParent<Canvas>();
+            return _parentCanvas;
         }
 
         //

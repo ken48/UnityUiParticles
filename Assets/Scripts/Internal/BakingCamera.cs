@@ -9,6 +9,12 @@ namespace UnityUiParticles.Internal
         Camera _camera;
         int _refCount;
 
+        void Awake()
+        {
+            // Attach camera to special scene
+            DontDestroyOnLoad(gameObject);
+        }
+
         public static void RegisterConsumer()
         {
             if (_instance == null)
