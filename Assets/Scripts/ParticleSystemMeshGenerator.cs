@@ -25,6 +25,7 @@ namespace UnityUiParticles
         MeshHelper _meshHelper;
         Material[] _maskMaterials;
         Canvas _parentCanvas;
+        bool _isRegistered;
 
         protected override void Awake()
         {
@@ -43,8 +44,6 @@ namespace UnityUiParticles
             _meshHelper = MeshHelper.Create();
             _maskMaterials = new Material[2];
 
-            BakingCamera.RegisterConsumer();
-
             _parentCanvas = null;
             Canvas.willRenderCanvases += Refresh;
         }
@@ -62,7 +61,11 @@ namespace UnityUiParticles
                 StencilMaterial.Remove(maskMaterial);
             _maskMaterials = null;
 
+            if (_isRegistered)
+            {
             BakingCamera.UnregisterConsumer();
+                _isRegistered = false;
+            }
         }
 
 #if UNITY_EDITOR
@@ -80,6 +83,12 @@ namespace UnityUiParticles
             Canvas parentCanvas = GetParentCanvas();
             if (parentCanvas == null)
                 return;
+
+            if (!_isRegistered)
+            {
+                BakingCamera.RegisterConsumer();
+                _isRegistered = true;
+            }
 
             _meshHelper.Clear();
 
