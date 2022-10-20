@@ -135,6 +135,7 @@ namespace UnityUiParticles
         {
             canvasRenderer.materialCount = _trailsModule.enabled ? 2 : 1;
             canvasRenderer.SetMaterial(GetModifiedMaterial(_material, 0), 0);
+            canvasRenderer.SetTexture(_material?.texture);
             if (_trailsModule.enabled)
                 canvasRenderer.SetMaterial(GetModifiedMaterial(_trailsMaterial, 1), 1);
         }
